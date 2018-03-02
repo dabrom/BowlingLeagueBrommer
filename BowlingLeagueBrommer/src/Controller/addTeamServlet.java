@@ -43,7 +43,7 @@ public class addTeamServlet extends HttpServlet {
 		String preferredNight = request.getParameter("preferredNight");
 		Team nt = new Team(teamName, teamType, preferredNight);
 		TeamHelper teamHelp = new TeamHelper();
-		teamHelp.insertItem(nt);
+		teamHelp.insertTeam(nt);
 		
 		getServletContext().getRequestDispatcher("/addTeam.html").forward(request, response);
 	}
