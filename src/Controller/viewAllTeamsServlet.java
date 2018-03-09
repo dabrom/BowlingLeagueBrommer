@@ -31,17 +31,7 @@ public class viewAllTeamsServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		TeamHelper th = new TeamHelper();
-		request.setAttribute("allTeams", th.showAllTeams());
-		if(th.showAllTeams().isEmpty()) {
-			request.setAttribute("allTeams", " ");
-		}
-		//test
-		for(Team t: th.showAllTeams()) {
-			System.out.println(t.toString());
-		}
-			getServletContext().getRequestDispatcher("/viewAllTeams.jsp").forward(request, response);
-		}
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -53,14 +43,14 @@ public class viewAllTeamsServlet extends HttpServlet {
 		String act = request.getParameter("doThisToItem");
 		
 		if (act == null) {
-			getServletContext().getRequestDispatcher("/viewAllTeamServlet").forward(request, response);
+			getServletContext().getRequestDispatcher("/buildTeamListServlet").forward(request, response);
 			}
 		else if (act.equals("Delete Selected Team")) {
 			Integer tempId = Integer.parseInt(request.getParameter("id"));
 			Team teamToDelete = th.searchForTeamById(tempId);
 			th.deleteTeam(teamToDelete);
 			
-			getServletContext().getRequestDispatcher("/viewAllTeamsServlet").forward(request, response);
+			getServletContext().getRequestDispatcher("/buildTeamListServlet").forward(request, response);
 			}
 		else if (act.equals("Add New Team")) {
 			getServletContext().getRequestDispatcher("/addTeam.html").forward(request, response);

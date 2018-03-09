@@ -1,5 +1,6 @@
 package Controller;
 
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,16 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 import Model.Player;
 
 /**
- * Servlet implementation class viewAllPlayersServlet
+ * Servlet implementation class buildPlayerListServlet
  */
-@WebServlet("/viewAllPlayersServlet")
-public class viewAllPlayersServlet extends HttpServlet {
+@WebServlet("/buildPlayerListServlet")
+public class buildPlayerListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public viewAllPlayersServlet() {
+    public buildPlayerListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,6 +30,17 @@ public class viewAllPlayersServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		PlayerHelper ph = new PlayerHelper();
+		request.setAttribute("allPlayers", ph.showAllPlayers());
+		if(ph.showAllPlayers().isEmpty()) {
+			request.setAttribute("allPlayers", " ");
+		}
+		//test
+		for(Player l: ph.showAllPlayers()) {
+			System.out.println(l.toString());
+		}
+			getServletContext().getRequestDispatcher("/viewAllPlayers.jsp").forward(request, response);
+		
 	}
 
 	/**
@@ -36,23 +48,7 @@ public class viewAllPlayersServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-	
-		PlayerHelper ph = new PlayerHelper();
-		String act = request.getParameter("doThisToItem");
-		
-		if (act == null) {
-			getServletContext().getRequestDispatcher("/buildPlayerListServlet").forward(request, response);
-			}
-		else if (act.equals("Delete Selected Player")) {
-			Integer tempId = Integer.parseInt(request.getParameter("id"));
-			Player playerToDelete = ph.searchForPlayerById(tempId);
-			ph.deletePlayer(playerToDelete);
-			
-			getServletContext().getRequestDispatcher("/buildPlayerListServlet").forward(request, response);
-			}
-		else if (act.equals("Add New Player")) {
-			getServletContext().getRequestDispatcher("/addPlayer.jsp").forward(request, response);
-		}
+		doGet(request, response);
 	}
 
 }

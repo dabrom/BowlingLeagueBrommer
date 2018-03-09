@@ -12,7 +12,7 @@
 <table>
 <c:forEach items="${requestScope.allPlayers}" var="currentitem">
 <tr>
-	<td><input type="radio" name="playerId" value="${currentitem.playerId}"></td>
+	<td><input type="radio" name="id" value="${currentitem.playerId}"></td>
 	<td>${currentitem.firstName}</td>
 	<td>${currentitem.lastName}</td>
 	<td>${currentitem.phoneNumber}</td>
